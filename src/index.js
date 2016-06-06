@@ -5,8 +5,11 @@ import options from './options';
 
 const { API_CLEVERBOT_USER, API_CLEVERBOT_TOKEN } = process.env;
 
-const email = options.email || options.e;
-const password = options.password || options.p;
+const email = options['email'] || options['e'];
+const password = options['password'] || options['p'];
+const minDelay = options['mindelay'] || 700;
+const maxDelay = options['maxdelay'] || 3000;
+const useDelay = !!options['no-delay'];
 
 const optError = (message, exitCode = 1) => {
   console.error(message);
@@ -41,7 +44,8 @@ fbLogin({ email, password }, (err, fb) => {
     bot.setNick(`session${msg.threadID}`);
     bot.create((err, session) => {
       bot.ask(msg.body, (err, res) => {
-        setTimeout(() => fb.sendMessage(res, msg.threadID), Math.random() * 2000);
+        const delay = useDelay ? Math.min(Math.random() * maxDelay, minDelay) : 0;
+        setTimeout(() => fb.sendMessage(res, msg.threadID), delay);
       });
     });
   });

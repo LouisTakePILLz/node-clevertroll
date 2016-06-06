@@ -1,5 +1,10 @@
 import parseArgs from 'minimist';
 
-const params = parseArgs(process.argv.slice(2));
+const opts = {
+  string: ['email', 'password'],
+  boolean: ['delay']
+};
+
+const params = parseArgs(process.argv.slice(2), opts);
 
 export default params;

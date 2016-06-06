@@ -4,6 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
+    "start": "node lib/index.js",
     "dev": "node scripts/dev.js",
     "clean": "rimraf lib",
     "build": "babel src -d lib",
